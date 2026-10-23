@@ -1,0 +1,17 @@
+SANS NAILSART - cara memasang
+
+Isi paket:
+  index.html        -> situs untuk pelanggan (alamat utama)
+  kelola/index.html -> aplikasi kelola pelanggan untuk owner (alamat: namadomain/kelola/)
+
+Cara termudah (gratis), dikerjakan oleh owner dengan akunnya sendiri:
+  1. Buka app.netlify.com/drop lalu daftar atau masuk.
+  2. Seret file ZIP ini ke halaman tersebut.
+  3. Netlify memberi alamat web. Alamat itu milik akun owner.
+
+Alternatif gratis: Cloudflare Pages (Direct Upload) atau GitHub Pages.
+
+Penting:
+  - Aplikasi kelola menyimpan data di browser HP yang dipakai. Buka selalu dari alamat yang sama.
+  - Rutin tekan "Cadangkan data" dan simpan filenya.
+  - Jangan bagikan alamat /kelola/ ke pelanggan.

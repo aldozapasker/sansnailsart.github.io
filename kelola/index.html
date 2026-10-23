@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0B0A0B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kelola Pelanggan | Sans Nailsart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0B0A0B;--rose:#D69C9E;--txt:#EDE4E2;--dim:rgba(237,228,226,.68);--line:rgba(214,156,158,.3);
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:radial-gradient(60% 50% at 80% 0,rgba(214,156,158,.16),transparent 70%),var(--black);color:var(--txt);font:300 1rem/1.6 var(--sans);min-height:100vh}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.wrap{max-width:860px;margin:0 auto;padding:22px 20px 60px}
+h1{font:500 1.9rem/1.1 var(--serif);margin:0;color:var(--rose);letter-spacing:.02em}
+.sub{color:var(--dim);margin:6px 0 22px;font-size:.92rem}
+input,select{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:6px;color:var(--txt);padding:13px 14px;font:inherit;font-size:1rem}
+label{display:grid;gap:6px;font-size:.82rem;color:var(--dim)}
+.btn{background:var(--rose);color:#1E1618;border:0;border-radius:6px;padding:13px 20px;font:400 .95rem var(--sans);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+.link{background:none;border:0;color:var(--rose);font:inherit;font-size:.85rem;text-decoration:underline;cursor:pointer;padding:6px 0}
+#lock{max-width:380px;margin:12vh auto 0;padding:0 20px}
+#lock form{display:grid;gap:14px}
+#msg,#stat{color:var(--rose);font-size:.9rem;min-height:1.4em}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+.bar .btn{padding:10px 16px;font-size:.85rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:end;margin-bottom:18px}
+.card{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,.03)}
+.card summary{cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dim{color:var(--dim);font-size:.9rem}
+.body{padding:2px 16px 16px;display:grid;gap:10px}
+.hist{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:10px 0;border-bottom:1px solid rgba(214,156,158,.18)}
+.hist .t{grid-column:1/-1}
+.rf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;align-items:end}
+a{color:var(--rose)}
+.note{font-size:.82rem;color:var(--dim);border-top:1px solid var(--line);margin-top:28px;padding-top:14px}
+</style>
+</head>
+<body>
+<section id="lock" hidden>
+  <h1>Sans Nailsart</h1>
+  <p class="sub" id="lh"></p>
+  <form id="lform">
+    <label><span id="lt">Masukkan PIN</span><input id="lp" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required></label>
+    <label id="lp2w"><span>Ulangi PIN</span><input id="lp2" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></label>
+    <button class="btn" type="submit" id="lb">Masuk</button>
+    <p id="msg" role="status"></p>
+  </form>
+</section>
+
+<main id="panel" class="wrap" hidden>
+  <h1>Data pelanggan</h1>
+  <p class="sub">Catatan pelanggan dan riwayat nail art Sans Nailsart.</p>
+  <div class="bar">
+    <button class="btn ghost" id="bk" type="button">Cadangkan data</button>
+    <label class="btn ghost" style="display:inline-block;cursor:pointer">Pulihkan data<input id="rs" type="file" accept="application/json,.json" hidden></label>
+    <button class="btn ghost" id="cp" type="button">Ganti PIN</button>
+    <button class="btn ghost" id="lo" type="button">Keluar</button>
+  </div>
+  <form id="pform" class="grid">
+    <label>Nama<input name="nama" required></label>
+    <label>WhatsApp<input name="wa" inputmode="tel" placeholder="0812..."></label>
+    <label>Catatan<input name="catatan" placeholder="Bentuk kuku atau warna favorit"></label>
+    <button class="btn" type="submit">Tambah pelanggan</button>
+  </form>
+  <input id="q" type="search" placeholder="Cari nama atau nomor" aria-label="Cari pelanggan" style="margin-bottom:12px">
+  <p id="stat" role="status"></p>
+  <div id="list"></div>
+  <p class="note">Data hanya tersimpan di browser perangkat ini dan tidak dikirim ke mana pun. PIN hanya mengunci aplikasi di perangkat ini. Jika data browser dihapus atau ganti HP, data hilang, jadi rutin tekan &ldquo;Cadangkan data&rdquo; dan simpan filenya (misalnya kirim ke WhatsApp sendiri atau Google Drive). Buka selalu dari alamat yang sama.</p>
+</main>
+
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var K='sn_data',P='sn_pin',S='sn_salt',rows=[],openId=null,fails=0,until=0,ph=null,salt=null;
+  var LAY=['Manicure','Pedicure','Dry manicure','Gel polish','Cat eye','Acrylic','Gel extension','Press-on nails','Nail art custom','Gel removal','Nail repair','Spa tangan dan kaki'];
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+  function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
+  function tgl(s){return s?new Date(s+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'-'}
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function put(k,v){try{localStorage.setItem(k,v);return true}catch(e){alert('Gagal menyimpan. Penyimpanan browser penuh atau dimatikan (mode privat).');return false}}
+  async function hash(pin,s){
+    var str=s+':'+pin;
+    if(window.crypto&&crypto.subtle){var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}
+    var h=5381;for(var i=0;i<str.length;i++)h=((h<<5)+h+str.charCodeAt(i))|0;return 'f'+h;
+  }
+  function msg(t){$('msg').textContent=t}
+  function showLock(){
+    rows=[];$('panel').hidden=true;$('lock').hidden=false;
+    var setup=!ph;
+    $('lt').textContent=setup?'Buat PIN (4–8 angka)':'Masukkan PIN';
+    $('lp2w').hidden=!setup;$('lp2').required=setup;
+    $('lh').textContent=setup?'Buat PIN untuk mengunci aplikasi ini di perangkatmu.':'Masuk untuk membuka data pelanggan.';
+    $('lb').textContent=setup?'Simpan PIN':'Masuk';
+  }
+  function enter(){
+    try{rows=JSON.parse(get(K))||[]}catch(e){rows=[]}
+    $('lock').hidden=true;$('panel').hidden=false;render();
+  }
+  $('lform').addEventListener('submit',async function(e){
+    e.preventDefault();var p=$('lp').value.trim();
+    if(!ph){
+      if(!/^[0-9]{4,8}$/.test(p)){msg('PIN harus 4–8 angka.');return}
+      if(p!==$('lp2').value.trim()){msg('Kedua PIN tidak sama.');return}
+      salt=Math.random().toString(36).slice(2)+Date.now().toString(36);
+      ph=await hash(p,salt);
+      if(!put(S,salt)||!put(P,ph)){ph=null;return}
+      msg('');enter();
+    }else{
+      if(Date.now()<until){msg('Terlalu banyak percobaan. Tunggu 30 detik.');return}
+      if(await hash(p,salt)===ph){fails=0;msg('');enter()}
+      else{fails++;if(fails>=5){until=Date.now()+30000;fails=0}msg('PIN salah.')}
+    }
+    $('lp').value='';$('lp2').value='';
+  });
+  function persist(){put(K,JSON.stringify(rows))}
+  function render(){
+    var term=$('q').value.trim().toLowerCase(),list=$('list');list.innerHTML='';
+    var shown=rows.filter(function(r){return !term||(r.nama||'').toLowerCase().indexOf(term)>-1||(r.wa||'').indexOf(term)>-1});
+    if(!shown.length){list.appendChild(el('p','dim',rows.length?'Tidak ada yang cocok.':'Belum ada pelanggan. Tambahkan lewat formulir di atas.'));return}
+    shown.forEach(function(r){
+      var h=r.riwayat||[],d=el('details','card');
+      if(openId===r.id)d.open=true;
+      d.addEventListener('toggle',function(){if(d.open)openId=r.id});
+      var sm=el('summary');sm.appendChild(el('b',null,r.nama||'Tanpa nama'));
+      sm.appendChild(el('span','dim',h.length+' kunjungan'+(h.length?', terakhir '+tgl(h[0].tanggal):'')));
+      d.appendChild(sm);
+      var b=el('div','body');
+      if(r.wa){var a=el('a',null,'WhatsApp: '+r.wa);a.href='https://wa.me/'+r.wa.replace(/[^0-9]/g,'').replace(/^0/,'62');a.target='_blank';a.rel='noopener';b.appendChild(a)}
+      if(r.catatan)b.appendChild(el('p','dim',r.catatan));
+      h.forEach(function(x,i){
+        var row=el('div','hist');
+        row.appendChild(el('span','t',tgl(x.tanggal)+' | '+x.layanan));
+        row.appendChild(el('span','dim',(x.desain||'')+(x.harga?(x.desain?' | ':'')+rp(x.harga):'')));
+        var del=el('button','link','Hapus');del.type='button';
+        del.onclick=function(){if(confirm('Hapus catatan ini?')){h.splice(i,1);openId=r.id;persist();render()}};
+        row.appendChild(del);b.appendChild(row);
+      });
+      var f=el('form','rf');
+      f.innerHTML='<label>Tanggal<input type="date" name="tanggal"></label><label>Layanan<select name="layanan"></select></label><label>Desain<input name="desain" placeholder="Warna, motif, catatan"></label><label>Harga (Rp)<input type="number" name="harga" min="0" step="1000" inputmode="numeric"></label>';
+      var sel=f.querySelector('select');LAY.forEach(function(n){sel.appendChild(el('option',null,n))});
+      var add=el('button','btn','Tambah riwayat');add.type='submit';f.appendChild(add);
+      f.onsubmit=function(e){
+        e.preventDefault();var v=new FormData(f);
+        h.push({tanggal:(v.get('tanggal')||'').toString()||new Date().toISOString().slice(0,10),layanan:v.get('layanan'),desain:(v.get('desain')||'').toString().trim(),harga:Number(v.get('harga'))||0});
+        h.sort(function(a,b){return a.tanggal<b.tanggal?1:-1});r.riwayat=h;openId=r.id;persist();render();
+      };
+      b.appendChild(f);
+      var dp=el('button','link','Hapus pelanggan ini');dp.type='button';dp.style.justifySelf='start';
+      dp.onclick=function(){if(confirm('Hapus '+r.nama+' beserta riwayatnya?')){rows=rows.filter(function(x){return x!==r});persist();render()}};
+      b.appendChild(dp);d.appendChild(b);list.appendChild(d);
+    });
+  }
+  $('pform').addEventListener('submit',function(e){
+    e.preventDefault();var f=e.target,v=new FormData(f);
+    rows.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),nama:v.get('nama').toString().trim(),wa:(v.get('wa')||'').toString().trim(),catatan:(v.get('catatan')||'').toString().trim(),riwayat:[],dibuat:new Date().toISOString()});
+    persist();f.reset();$('stat').textContent='Pelanggan ditambahkan.';render();
+  });
+  $('q').addEventListener('input',render);
+  $('lo').addEventListener('click',showLock);
+  $('bk').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify({app:'sans-nailsart',dibuat:new Date().toISOString(),pelanggan:rows},null,1)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cadangan-pelanggan-'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+    $('stat').textContent='Cadangan diunduh. Simpan filenya di tempat aman.';
+  });
+  $('rs').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){
+      try{
+        var d=JSON.parse(r.result),arr=Array.isArray(d)?d:d.pelanggan;
+        if(!Array.isArray(arr))throw 0;
+        if(!confirm('Ganti semua data sekarang dengan '+arr.length+' pelanggan dari file ini?'))return;
+        rows=arr;persist();render();$('stat').textContent='Data dipulihkan.';
+      }catch(x){alert('File cadangan tidak valid.')}
+    };
+    r.readAsText(f);e.target.value='';
+  });
+  $('cp').addEventListener('click',async function(){
+    var n=prompt('PIN baru (4–8 angka):');if(n===null)return;n=n.trim();
+    if(!/^[0-9]{4,8}$/.test(n)){alert('PIN harus 4–8 angka.');return}
+    salt=Math.random().toString(36).slice(2)+Date.now().toString(36);ph=await hash(n,salt);
+    if(put(S,salt)&&put(P,ph))$('stat').textContent='PIN diganti.';
+  });
+  ph=get(P);salt=get(S);if(ph&&!salt)ph=null;
+  showLock();
+})();
+</script>
+</body>
+</html>
