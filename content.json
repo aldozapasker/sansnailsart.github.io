@@ -1,0 +1,46 @@
+{
+ "hero": "photos/hero.jpg",
+ "gallery": [
+  {
+   "src": "photos/foto01.jpg",
+   "alt": "Nail art merah dengan jaring laba-laba dan hati"
+  },
+  {
+   "src": "photos/foto02.jpg",
+   "alt": "Nail art cat eye cokelat keemasan"
+  },
+  {
+   "src": "photos/foto03.jpg",
+   "alt": "Nail art marun dan putih dengan motif bunga dan garis emas"
+  },
+  {
+   "src": "photos/foto04.jpg",
+   "alt": "Nail art biru transparan dengan bunga dan serpihan emas"
+  },
+  {
+   "src": "photos/foto05.jpg",
+   "alt": "Nail art french warna-warni dengan gambar tangan"
+  },
+  {
+   "src": "photos/foto06.jpg",
+   "alt": "Nail art merah dengan bintang perak, pita, dan polkadot"
+  },
+  {
+   "src": "photos/foto07.jpg",
+   "alt": "Nail art 3D emas dan tosca dengan mutiara"
+  },
+  {
+   "src": "photos/foto08.jpg",
+   "alt": "Nail art hitam, merah, dan emas dengan batu permata"
+  },
+  {
+   "src": "photos/foto09.jpg",
+   "alt": "Nail art biru chrome dengan garis perak"
+  },
+  {
+   "src": "photos/foto10.jpg",
+   "alt": "Nail art glitter emas dengan motif bintik hewan"
+  }
+ ],
+ "updated": ""
+}

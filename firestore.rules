@@ -1,0 +1,16 @@
+rules_version = '2';
+// UID owner sudah terisi. Tempel isi file ini di Firebase > Firestore > Rules > Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /pelanggan/{uid} {
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['nama','kontak','tipe','dibuat'])
+        && request.resource.data.nama is string
+        && request.resource.data.nama.size() > 0 && request.resource.data.nama.size() <= 80
+        && request.resource.data.kontak is string && request.resource.data.kontak.size() <= 120
+        && request.resource.data.tipe in ['wa','email'];
+      allow read: if request.auth != null && (request.auth.uid == uid || request.auth.uid == 'dP0ZhkHkRudJwgdVsiOPDMsKBVC2');
+      allow update, delete: if request.auth != null && request.auth.uid == 'dP0ZhkHkRudJwgdVsiOPDMsKBVC2';
+    }
+  }
+}

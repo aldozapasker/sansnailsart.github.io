@@ -1,0 +1,55 @@
+STATUS TERBARU
+  - firebase-config.js sudah terisi untuk proyek Firebase "sansnailsart".
+  - firestore.rules sudah memuat UID owner. Tempel isinya di Firebase > Firestore Database >
+    Rules > Publish (setelah database dibuat).
+
+SANS NAILSART - paket situs dan ruang kelola
+
+ISI PAKET
+  index.html          situs untuk pelanggan (alamat utama)
+  firebase-config.js  data koneksi Firebase (WAJIB diisi agar login pelanggan aktif)
+  firestore.rules     aturan keamanan database (ditempel di Firebase)
+  content.json        daftar foto utama dan galeri (diubah otomatis oleh ruang kelola)
+  photos/             berkas foto
+  kelola/index.html   ruang kelola owner (alamat: alamatsitus/kelola/)
+
+A. PASANG DI GITHUB PAGES
+  1. Buat repositori publik. Unggah SEMUA isi paket ini (termasuk folder photos dan kelola).
+  2. Settings > Pages > Deploy from a branch > main > root > Save.
+  Selama firebase-config.js belum diisi, situs tampil terbuka tanpa wajib login.
+
+B. AKTIFKAN LOGIN PELANGGAN (Firebase, paket gratis Spark)
+  1. Buka console.firebase.google.com, masuk dengan akun Google owner, Add project.
+  2. Build > Authentication > Get started > Sign-in method > Email/Password > Enable.
+     (Aktifkan hanya Email/Password, jangan "email link".)
+  3. Authentication > Users > Add user: isi email dan password untuk OWNER.
+     Catat "User UID" akun itu.
+  4. Build > Firestore Database > Create database (mode production, lokasi terdekat).
+  5. Firestore > Rules: tempel isi firestore.rules, ganti ISI_UID_OWNER dengan UID tadi,
+     lalu Publish.
+  6. Project settings (ikon roda) > Your apps > Web (</>) > Register app. Salin
+     apiKey, authDomain, projectId, appId ke firebase-config.js.
+  7. Unggah ulang firebase-config.js ke GitHub (timpa yang lama).
+  8. Uji: buka situs di jendela penyamaran, harus muncul layar Masuk/Daftar. Daftar dengan
+     nomor WA, lalu buka ruang kelola > tab Pendaftar > masuk dengan email owner tadi.
+  Kalau muncul pesan soal domain tidak diizinkan, tambahkan domain situs di
+  Authentication > Settings > Authorized domains.
+
+C. ATUR FOTO SITUS DARI RUANG KELOLA
+  1. Buka alamatsitus/kelola/ lalu buat PIN.
+  2. Tab "Foto situs": isi username GitHub, nama repositori, branch, dan token.
+  3. Token: GitHub > Settings > Developer settings > Personal access tokens >
+     Fine-grained tokens > Generate new token. Pilih hanya repositori situs ini.
+     Permissions > Contents: Read and write. Atur masa berlaku.
+
+CATATAN PENTING
+  - Pelanggan mendaftar tanpa verifikasi: nomor atau email bisa saja milik orang lain
+    atau salah ketik. Anggap data sebagai petunjuk, bukan bukti identitas.
+  - Password pelanggan dikelola Firebase dan tidak bisa dibaca owner. Jika pelanggan
+    lupa password, owner menghapus akunnya di Firebase (Authentication > Users),
+    lalu pelanggan mendaftar ulang.
+  - Data nama dan kontak pelanggan adalah data pribadi. Gunakan hanya untuk keperluan
+    booking dan jaga keamanannya.
+  - Token GitHub dan data pelanggan lokal tersimpan di browser perangkat owner.
+  - Rutin tekan "Cadangkan data" di ruang kelola. Jangan unggah file cadangan ke GitHub.
+  - Jangan bagikan alamat /kelola/ ke pelanggan.
